@@ -1,0 +1,114 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1>Installed Apps Risk Overview</h1>
+        <p class="page-subtitle">
+            Simulated analysis of installed applications on an Android device, highlighting
+            potential spyware or risky screen-mirroring behavior.
+        </p>
+    </div>
+    <div class="stats-chip-row">
+        <div class="stat-chip">
+            <span class="stat-label">Total Apps</span>
+            <span class="stat-value">{{ apps|length }}</span>
+        </div>
+        <div class="stat-chip stat-chip-high">
+            <span class="stat-label">High Risk</span>
+            <span class="stat-value">
+                {{ apps|selectattr("risk_level", "equalto", "High")|list|length }}
+            </span>
+        </div>
+        <div class="stat-chip stat-chip-medium">
+            <span class="stat-label">Medium Risk</span>
+            <span class="stat-value">
+                {{ apps|selectattr("risk_level", "equalto", "Medium")|list|length }}
+            </span>
+        </div>
+        <div class="stat-chip stat-chip-low">
+            <span class="stat-label">Low Risk</span>
+            <span class="stat-value">
+                {{ apps|selectattr("risk_level", "equalto", "Low")|list|length }}
+            </span>
+        </div>
+    </div>
+</header>
+
+<div class="table-wrapper">
+    <table class="app-table">
+        <thead>
+            <tr>
+                <th>App</th>
+                <th>Package Name</th>
+                <th>Risk Score</th>
+                <th>Risk Level</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for app in apps %}
+            <tr class="row-hover">
+                <td class="app-cell">
+                    <div class="app-meta">
+                        <div class="app-icon-placeholder">
+                            <span class="app-icon-char">
+                                {{ app.app_name[:1] if app.app_name else '?' }}
+                            </span>
+                        </div>
+                        <div>
+                            <a class="app-name-link"
+                               href="{{ url_for('app_detail', package_name=app.package_name) }}">
+                                {{ app.app_name }}
+                            </a>
+                            <div class="app-tags">
+                                {% if app.uses_media_projection %}
+                                    <span class="pill pill-warning">Screen Capture</span>
+                                {% endif %}
+                                {% if app.uses_accessibility_service %}
+                                    <span class="pill pill-warning">Accessibility</span>
+                                {% endif %}
+                                {% if not app.installed_from_play_store %}
+                                    <span class="pill pill-critical">Sideloaded</span>
+                                {% endif %}
+                                {% if app.is_system_app %}
+                                    <span class="pill pill-neutral">System</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="pkg-cell">
+                    <code>{{ app.package_name }}</code>
+                </td>
+                <td>
+                    <div class="risk-bar-wrapper">
+                        <div class="risk-bar risk-{{ app.risk_level|lower }}"
+                             style="width: {{ app.risk_score }}%;">
+                            {{ "%.1f"|format(app.risk_score) }}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="risk-badge risk-{{ app.risk_level|lower }}">
+                        {{ app.risk_level }}
+                    </span>
+                </td>
+                <td>
+                    {% if app.installed_from_play_store %}
+                        <span class="source-pill source-safe">Play Store</span>
+                    {% else %}
+                        <span class="source-pill source-unknown">Unknown / Sideloaded</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<p class="helper-text">
+    Click on any app name to view a detailed breakdown of its permissions, behaviors, and
+    why it has been assigned its current risk score.
+</p>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SpyShield - {{ title if title else 'Dashboard' }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-bg">
+    <div class="noise-layer"></div>
+
+    <!-- NAVBAR (right pill removed) -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo-circle">
+                <span class="logo-dot"></span>
+            </div>
+            <div class="nav-title-text">
+                <a href="{{ url_for('index') }}">SpyShield</a>
+                <span class="nav-subtitle">Anti-Spyware Risk Analyzer</span>
+            </div>
+        </div>
+        <!-- nav-right removed as requested -->
+    </nav>
+
+    <main class="main-wrapper">
+        <section class="glass-card">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <!-- FOOTER TEXT UPDATED -->
+    <footer class="footer">
+        <p>SpyShield @ AnkitSaha</p>
+    </footer>
+</div>
+</body>
+</html>

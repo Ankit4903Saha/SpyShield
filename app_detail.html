@@ -1,0 +1,126 @@
+<!-- templates/app_detail.html -->
+{% extends "base.html" %}
+{% block content %}
+<header class="page-header detail-header">
+    <div class="detail-title-block">
+        <div class="app-icon-large">
+            <span class="app-icon-char">
+                {{ app.app_name[:1] if app.app_name else '?' }}
+            </span>
+        </div>
+        <div>
+            <h1>{{ app.app_name }}</h1>
+            <p class="page-subtitle">
+                Detailed risk profile and behavior analysis for this application.
+            </p>
+            <p class="pkg-text">
+                <strong>Package:</strong> <code>{{ app.package_name }}</code>
+            </p>
+        </div>
+    </div>
+    <div class="detail-header-right">
+        <div class="risk-score-circle risk-{{ app.risk_level|lower }}">
+            <span class="risk-score-main">{{ "%.0f"|format(app.risk_score) }}</span>
+            <span class="risk-score-label">Risk</span>
+        </div>
+        <span class="risk-badge risk-{{ app.risk_level|lower }} risk-badge-large">
+            {{ app.risk_level }} Risk
+        </span>
+    </div>
+</header>
+
+<section class="detail-grid">
+    <div class="detail-card">
+        <h2>Basic Info</h2>
+        <ul class="info-list">
+            <li>
+                <span>System app</span>
+                <strong>{{ 'Yes' if app.is_system_app else 'No' }}</strong>
+            </li>
+            <li>
+                <span>Launcher icon visible</span>
+                <strong>{{ 'Yes' if app.has_launcher_icon else 'No' }}</strong>
+            </li>
+            <li>
+                <span>Installed from Play Store</span>
+                <strong>{{ 'Yes' if app.installed_from_play_store else 'No' }}</strong>
+            </li>
+            <li>
+                <span>Uses Accessibility Service</span>
+                <strong>{{ 'Yes' if app.uses_accessibility_service else 'No' }}</strong>
+            </li>
+            <li>
+                <span>Uses Screen Capture (MediaProjection)</span>
+                <strong>{{ 'Yes' if app.uses_media_projection else 'No' }}</strong>
+            </li>
+            <li>
+                <span>Overlay Permission (Draw over apps)</span>
+                <strong>{{ 'Yes' if app.has_overlay_permission else 'No' }}</strong>
+            </li>
+        </ul>
+    </div>
+
+    <div class="detail-card">
+        <h2>Behavior Scores</h2>
+        <div class="behavior-metric">
+            <div class="metric-label">
+                <span>Foreground Service Usage</span>
+                <span class="metric-value">{{ app.foreground_service_usage_score }}</span>
+            </div>
+            <div class="metric-bar-bg">
+                <div class="metric-bar-fill"
+                     style="width: {{ app.foreground_service_usage_score * 100 }}%;"></div>
+            </div>
+            <p class="metric-hint">
+                Indicates how often the app runs long-lived foreground services. High values
+                may suggest background monitoring or continuous activity.
+            </p>
+        </div>
+
+        <div class="behavior-metric">
+            <div class="metric-label">
+                <span>Background Network Activity</span>
+                <span class="metric-value">{{ app.background_network_usage_score }}</span>
+            </div>
+            <div class="metric-bar-bg">
+                <div class="metric-bar-fill metric-bar-secondary"
+                     style="width: {{ app.background_network_usage_score * 100 }}%;"></div>
+            </div>
+            <p class="metric-hint">
+                Shows how actively the app communicates with remote servers in the background.
+                Extremely high values can be suspicious for spyware.
+            </p>
+        </div>
+    </div>
+
+    <div class="detail-card detail-card-wide">
+        <h2>Permissions</h2>
+        {% if app.permissions %}
+            <div class="chips-container">
+                {% for p in app.permissions %}
+                    <span class="permission-chip">{{ p }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No permissions recorded for this application.</p>
+        {% endif %}
+    </div>
+
+    <div class="detail-card detail-card-wide">
+        <h2>Why this risk score?</h2>
+        {% if app.risk_reasons %}
+            <ol class="reasons-list">
+                {% for r in app.risk_reasons %}
+                    <li>{{ r }}</li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p>This app has a very low risk score and no specific suspicious patterns detected.</p>
+        {% endif %}
+    </div>
+</section>
+
+<p class="back-link">
+    <a href="{{ url_for('index') }}">&larr; Back to overview</a>
+</p>
+{% endblock %}
