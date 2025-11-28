@@ -1,0 +1,92 @@
+[
+    {
+        "package_name": "com.example.spyapp",
+        "app_name": "Screen Mirror Pro",
+        "permissions": [
+            "android.permission.READ_SMS",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.READ_CALL_LOG",
+            "android.permission.SYSTEM_ALERT_WINDOW",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.INTERNET"
+        ],
+        "is_system_app": false,
+        "has_launcher_icon": false,
+        "installed_from_play_store": false,
+        "uses_accessibility_service": true,
+        "uses_media_projection": true,
+        "has_overlay_permission": true,
+        "foreground_service_usage_score": 0.9,
+        "background_network_usage_score": 0.85
+    },
+    {
+        "package_name": "com.google.android.youtube",
+        "app_name": "YouTube",
+        "permissions": [
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE",
+            "android.permission.WAKE_LOCK"
+        ],
+        "is_system_app": false,
+        "has_launcher_icon": true,
+        "installed_from_play_store": true,
+        "uses_accessibility_service": false,
+        "uses_media_projection": false,
+        "has_overlay_permission": false,
+        "foreground_service_usage_score": 0.3,
+        "background_network_usage_score": 0.4
+    },
+    {
+        "package_name": "com.example.supportapp",
+        "app_name": "Remote Support Helper",
+        "permissions": [
+            "android.permission.INTERNET",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.CAMERA",
+            "android.permission.SYSTEM_ALERT_WINDOW"
+        ],
+        "is_system_app": false,
+        "has_launcher_icon": true,
+        "installed_from_play_store": true,
+        "uses_accessibility_service": true,
+        "uses_media_projection": true,
+        "has_overlay_permission": true,
+        "foreground_service_usage_score": 0.7,
+        "background_network_usage_score": 0.6
+    },
+    {
+        "package_name": "com.whatsapp",
+        "app_name": "WhatsApp",
+        "permissions": [
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE",
+            "android.permission.READ_CONTACTS",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.CAMERA"
+        ],
+        "is_system_app": false,
+        "has_launcher_icon": true,
+        "installed_from_play_store": true,
+        "uses_accessibility_service": false,
+        "uses_media_projection": false,
+        "has_overlay_permission": false,
+        "foreground_service_usage_score": 0.4,
+        "background_network_usage_score": 0.5
+    },
+    {
+        "package_name": "com.android.systemui",
+        "app_name": "System UI",
+        "permissions": [
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE"
+        ],
+        "is_system_app": true,
+        "has_launcher_icon": false,
+        "installed_from_play_store": false,
+        "uses_accessibility_service": false,
+        "uses_media_projection": false,
+        "has_overlay_permission": false,
+        "foreground_service_usage_score": 0.2,
+        "background_network_usage_score": 0.1
+    }
+]
